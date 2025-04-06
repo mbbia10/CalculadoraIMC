@@ -1,63 +1,103 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
-import Result from './Result';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard } from 'react-native';
+import IMCClassification from './Classification';
+import IdealWeight from './IdealWeight';
 
-const FormIMC = () => {
-  const [peso, setPeso] = useState('');
-  const [altura, setAltura] = useState('');
+export default function FormIMC() {
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
   const [imc, setImc] = useState(null);
 
-  const calcularIMC = () => {
-    if (peso && altura) {
-      const alturaMetros = parseFloat(altura) / 100;
-      const imcCalculado = (parseFloat(peso) / (alturaMetros * alturaMetros)).toFixed(2);
-      setImc(imcCalculado);
-    }
+  const formatInput = (value) => {
+    return value.replace(',', '.').replace(/[^0-9.]/g, '');
+  };
+
+  const calculateIMC = () => {
+    const altura = parseFloat(formatInput(height));
+    const peso = parseFloat(formatInput(weight));
+    if (!altura || !peso) return;
+
+    const result = peso / (altura * altura);
+    setImc(result);
+    Keyboard.dismiss();
   };
 
   return (
-    <View style={styles.formContainer}>
+    <View style={styles.container}>
+      <Text style={styles.label}>Altura (ex: 1.70)</Text>
       <TextInput
-        style={styles.input}
-        placeholder="Peso (kg)"
+        placeholder="Digite sua altura em metros"
         keyboardType="numeric"
-        value={peso}
-        onChangeText={setPeso}
+        value={height}
+        onChangeText={setHeight}
+        style={styles.input}
       />
+
+      <Text style={styles.label}>Peso (ex: 70)</Text>
       <TextInput
-        style={styles.input}
-        placeholder="Altura (cm)"
+        placeholder="Digite seu peso em kg"
         keyboardType="numeric"
-        value={altura}
-        onChangeText={setAltura}
+        value={weight}
+        onChangeText={setWeight}
+        style={styles.input}
       />
-      <Button style={styles.button_calc} title="Calcular IMC" onPress={calcularIMC} />
-      {imc && <Result imc={imc} />}
+
+      <TouchableOpacity style={styles.button} onPress={calculateIMC}>
+        <Text style={styles.buttonText}>Calcular IMC</Text>
+      </TouchableOpacity>
+
+      {imc && (
+        <View style={styles.resultContainer}>
+          <Text style={styles.resultText}>Seu IMC: {imc.toFixed(2)}</Text>
+          <IMCClassification imc={imc} />
+          <IdealWeight height={parseFloat(formatInput(height))} />
+        </View>
+      )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  formContainer: {
-    backgroundColor: '#f0f0f0',
-    padding: 16,
-    borderRadius: 20,
+  container: {
+    marginTop: 20,
+    backgroundColor: '#f9f9f9',
+    padding: 20,
+    borderRadius: 12,
+    elevation: 4,
+  },
+  label: {
+    fontSize: 14,
+    marginBottom: 4,
+    color: '#333',
+    fontWeight: 'bold',
   },
   input: {
-    height: 40,
-    borderColor: '#999',
     borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
+    padding: 10,
+    marginBottom: 15,
     borderRadius: 10,
+    borderColor: '#ccc',
+    backgroundColor: '#fff',
   },
-
-  button_calc: {
-    height: 50, // Aumentando a altura do botão
-    backgroundColor: '#4CAF50', // Definindo a cor de fundo
-    borderRadius: 10, // Borda arredondada
+  button: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 20,
   },
-
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  resultContainer: {
+    marginTop: 10,
+  },
+  resultText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#222',
+  },
 });
-
-export default FormIMC;
