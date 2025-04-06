@@ -1,3 +1,5 @@
+Video sobre o projeto: https://youtube.com/shorts/ghKI30yZGvQ?feature=share
+
 Calculadora de IMC
 
 Trabalho de PAM desenvolvido em React Native com Expo que calcula o Índice de Massa Corporal (IMC), exibe a classificaçãoc e também o peso ideal com base na altura informada. Além disso, oferece uma tela informativa com detalhes sobre o IMC.
