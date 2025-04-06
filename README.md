@@ -85,4 +85,20 @@ Máximo = 24.9 × altura²
 InfoIMC.js
 Tela adicional com informações detalhadas sobre o que é o IMC, como é calculado e por que ele é importante.
 
+Como executar o projeto:
+
+Clone o repositório com o comando: git clone https://github.com/SeuUsuario/CalculadoraIMC.git
+
+Acesse o diretório do projeto: cd CalculadoraIMC
+
+Instale as dependências com: npm install
+
+Inicie o projeto com: npx expo start
+
+Certifique-se de ter o Node.js e o Expo CLI instalados em sua máquina. O app pode ser testado utilizando o Expo Go no celular.
+
+O projeto foi desenvolvido com foco em aplicar os conceitos aprendidos em aula, como componentização, uso de estados (useState), passagem de propriedades (props) e navegação entre telas. Além disso, o layout foi pensado para ser simples, intuitivo e funcional.
+
+Este projeto também foi apresentado em um vídeo explicativo, onde são demonstradas suas funcionalidades e a implementação dos conceitos aprendidos.
+
 
